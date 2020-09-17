@@ -22,11 +22,30 @@ Future<DecryptResponse> decryptFile({
   @required Dio client,
   @required FormData data,
   @required String endpoint,
+  Options options,
 }) async {
-  final response = await client.post('$endpoint/upload', data: data);
+  if (options == null)
+    options = Options(contentType: Headers.formUrlEncodedContentType);
+
+  final response = await client.post(
+    '$endpoint/upload',
+    data: data,
+    options: options,
+  );
 
   if (response.statusCode == 200)
     return DecryptResponse.fromJson(response.data);
 
   return null;
+}
+
+/// Descriptografa um arquivo.
+Future<Map<String, dynamic>> decryptF10({
+  @required Dio client,
+  @required Map<String, dynamic> data,
+  @required String endpoint,
+}) async {
+  final response = await client.post('$endpoint/decrypt_f10', data: data);
+
+  return response.statusCode == 200 ? response.data : null;
 }
