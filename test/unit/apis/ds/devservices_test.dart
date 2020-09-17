@@ -72,7 +72,6 @@ main() {
         endpoint: endpoint,
         data: data,
       );
-
       expect(result, isA<DecryptResponse>());
     });
 

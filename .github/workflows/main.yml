@@ -13,6 +13,7 @@ jobs:
         with:
           channel: dev
       - run: flutter pub get
+      - run: flutter analyze
       - run: flutter test
       # TODO: ver como gerar o app depois.
       # - run: flutter build apk --debug --split-per-abi
