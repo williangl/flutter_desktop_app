@@ -5,7 +5,7 @@ import 'package:mockito/mockito.dart';
 import 'package:myapp/apis/ds/decrypt_response.dart';
 import 'package:myapp/apis/ds/devservices.dart';
 
-class DioMock extends Mock implements Dio {}
+import '../../mocks.dart';
 
 main() {
   final faker = Faker();
