@@ -22,23 +22,25 @@ main() {
     test('should return null when http code is not 200', () async {
       var event = faker.lorem.word();
 
-      when(client.post('$endpoint/process_log2', data: event)).thenAnswer(
+      when(client.get('$endpoint/process_log/$event')).thenAnswer(
         (_) async => Response(data: 'Internal Server Error', statusCode: 500),
       );
 
       expect(
-        await decryptEvent(client: client, endpoint: endpoint, event: event),
+        await decryptEvent(
+          client: client,
+          endpoint: endpoint,
+          event: event,
+        ),
         equals(null),
       );
 
       verify(
-        client.post(
-          '$endpoint/process_log2',
-          data: event,
+        client.get(
+          '$endpoint/process_log/$event',
           queryParameters: null,
           options: null,
           cancelToken: null,
-          onSendProgress: null,
           onReceiveProgress: null,
         ),
       ).called(1);
@@ -53,7 +55,7 @@ main() {
         'content': faker.lorem.word()
       };
 
-      when(client.post('$endpoint/process_log2', data: event)).thenAnswer(
+      when(client.get('$endpoint/process_log/$event')).thenAnswer(
         (_) async => Response(data: jsonResponse, statusCode: 200),
       );
 
@@ -65,13 +67,11 @@ main() {
 
       expect(result, isA<DecryptResponse>());
       verify(
-        client.post(
-          '$endpoint/process_log2',
-          data: event,
+        client.get(
+          '$endpoint/process_log/$event',
           queryParameters: null,
           options: null,
           cancelToken: null,
-          onSendProgress: null,
           onReceiveProgress: null,
         ),
       ).called(1);

@@ -9,7 +9,9 @@ Future<DecryptResponse> decryptEvent({
   @required String event,
   @required String endpoint,
 }) async {
-  final response = await client.post('$endpoint/process_log2', data: event);
+  final response = await client.get(
+    '$endpoint/process_log/$event',
+  );
 
   if (response.statusCode == 200)
     return DecryptResponse.fromJson(response.data);
